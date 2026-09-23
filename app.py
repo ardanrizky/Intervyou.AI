@@ -19,6 +19,7 @@ import pandas as pd
 from questions import get_questions_for_role, ROLES
 from answer_keys import get_ideal_answers
 from text_scoring import (
+    evaluate_interview_answer,
     tfidf_cosine_score,
     similarity_to_score,
     analyze_keyword_gap,
@@ -170,30 +171,14 @@ def evaluate_answer():
     if question_index >= total_questions:
         question_index = total_questions - 1
 
+    current_q_text = questions[question_index]
     ideal_answers = get_ideal_answers(role, question_index)
-    similarity = tfidf_cosine_score(answer_text, ideal_answers)
-    score = similarity_to_score(similarity)
-
-    keyword_gap = analyze_keyword_gap(answer_text, ideal_answers)
-
-    words = answer_text.split()
-    word_count = len(words)
-
-    if word_count < 10:
-        detail_msg = "Jawaban terlalu singkat. Jelaskan konteks dan contoh nyata agar lebih meyakinkan."
-    elif word_count < 30:
-        detail_msg = "Jawaban cukup baik, tapi bisa dipertajam dengan langkah atau alat yang spesifik."
-    else:
-        detail_msg = "Penjelasan mendalam dan terstruktur dengan baik."
-
-    if score < 60:
-        relevance_msg = "Kesesuaian konsep dengan standar teknis role ini masih perlu ditingkatkan."
-    elif score < 80:
-        relevance_msg = "Konsep dasar sudah relevan dan mengena pada poin inti."
-    else:
-        relevance_msg = "Jawaban sangat komprehensif dan tepat sasaran."
-
-    feedback = f"{relevance_msg} {detail_msg}"
+    eval_result = evaluate_interview_answer(answer_text, ideal_answers, current_q_text)
+    
+    score = eval_result["score"]
+    feedback = eval_result["feedback"]
+    matched_keywords = eval_result["matched_keywords"]
+    missing_keywords = eval_result["missing_keywords"]
 
     scores = session.get("current_session_scores", [])
     scores.append(score)
@@ -238,8 +223,8 @@ def evaluate_answer():
         "success": True,
         "score": score,
         "feedback": feedback,
-        "matched_keywords": keyword_gap["matched"],
-        "missing_keywords": keyword_gap["missing"],
+        "matched_keywords": matched_keywords,
+        "missing_keywords": missing_keywords,
         "has_next": has_next,
         "next_question": next_question,
         "next_question_index": next_idx,
