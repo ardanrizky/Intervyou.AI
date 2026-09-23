@@ -12,29 +12,22 @@
   <div class="app-container">
     <aside class="sidebar">
       <a href="{{ url_for('dashboard') }}" class="brand">
-        <div class="brand-icon">⚡</div>
-        <div class="brand-text">
-          <span class="brand-title">Intervyou<span>.AI</span></span>
-          <span class="brand-badge">Teknikal & NLP</span>
-        </div>
+        <span class="brand-title">Intervyou<span>.AI</span></span>
       </a>
 
       <ul class="nav-links">
         <li class="nav-item {% if request.path == url_for('dashboard') %}active{% endif %}">
           <a href="{{ url_for('dashboard') }}">
-            <span class="nav-icon">📊</span>
             <span>Dashboard</span>
           </a>
         </li>
         <li class="nav-item {% if request.path == url_for('interview') %}active{% endif %}">
           <a href="{{ url_for('interview') }}">
-            <span class="nav-icon">🎙️</span>
             <span>Mulai Wawancara</span>
           </a>
         </li>
         <li class="nav-item {% if request.path == url_for('history') %}active{% endif %}">
           <a href="{{ url_for('history') }}">
-            <span class="nav-icon">📜</span>
             <span>Riwayat Simulasi</span>
           </a>
         </li>

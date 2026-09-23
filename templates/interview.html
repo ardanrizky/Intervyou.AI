@@ -15,10 +15,10 @@
     <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; flex-wrap: wrap; gap: 12px;">
       <div class="mode-tabs">
         <button id="voiceTab" class="mode-tab active">
-          <span>🎙️</span> Mode Suara (Mic)
+          Mode Suara (Mic)
         </button>
         <button id="textTab" class="mode-tab">
-          <span>✍️</span> Mode Teks
+          Mode Teks
         </button>
       </div>
       <span style="font-size: 13px; color: var(--text-subtle);">Bahasa: Indonesia (id-ID)</span>
@@ -27,7 +27,7 @@
     <!-- Mode Suara -->
     <div id="voiceArea" class="voice-area">
       <button id="micBtn" class="mic-circle-btn" title="Klik untuk Bicara">
-        🎤
+        <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2a3 3 0 0 0-3 3v7a3 3 0 0 0 6 0V5a3 3 0 0 0-3-3Z"></path><path d="M19 10v2a7 7 0 0 1-14 0v-2"></path><line x1="12" y1="19" x2="12" y2="22"></line></svg>
       </button>
       <p id="voiceStatus" class="voice-status">Klik mikrofon untuk mulai berbicara...</p>
       <div id="speechPreview" class="speech-preview">
@@ -82,9 +82,8 @@
 
   <!-- Kartu Selesai Wawancara -->
   <div id="finishCard" class="glass-card hidden" style="text-align: center; padding: 40px; border-color: rgba(99, 102, 241, 0.4);">
-    <div style="font-size: 48px; margin-bottom: 12px;">🎉</div>
-    <h2 style="font-size: 24px; font-weight: 800; color: #ffffff;">Sesi Wawancara Selesai!</h2>
-    <p style="color: var(--text-muted); margin-top: 6px; font-size: 14.5px;">Selamat, Anda telah menyelesaikan seluruh rangkaian pertanyaan teknis untuk peran {{ user_role }}.</p>
+    <h2 style="font-size: 24px; font-weight: 800; color: #ffffff; margin-bottom: 6px;">Sesi Wawancara Selesai</h2>
+    <p style="color: var(--text-muted); font-size: 14.5px;">Selamat, Anda telah menyelesaikan seluruh rangkaian pertanyaan teknis untuk peran {{ user_role }}.</p>
 
     <div style="margin: 28px auto; width: 120px; height: 120px; border-radius: 50%; border: 6px solid var(--accent-cyan); display: flex; flex-direction: column; align-items: center; justify-content: center; box-shadow: 0 0 30px rgba(6, 182, 212, 0.3);">
       <span id="finalAvgScore" style="font-size: 38px; font-weight: 800; color: #ffffff; line-height: 1;">0</span>
@@ -95,7 +94,7 @@
 
     <div style="display: flex; justify-content: center; gap: 14px; flex-wrap: wrap;">
       <a href="{{ url_for('history') }}" class="btn-primary">
-        📜 Lihat Riwayat & Ekspor Excel
+        Lihat Riwayat & Ekspor Excel
       </a>
       <a href="{{ url_for('dashboard') }}" class="btn-secondary">
         Kembali ke Dashboard

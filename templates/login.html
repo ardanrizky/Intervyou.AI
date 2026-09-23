@@ -2,39 +2,76 @@
 
 {% block auth_content %}
 <div class="auth-wrapper">
-  <div class="auth-card">
-    <div style="text-align: center; margin-bottom: 28px;">
-      <div class="brand-icon" style="margin: 0 auto 16px auto; width: 48px; height: 48px; font-size: 24px;">⚡</div>
-      <h1 style="font-size: 24px; font-weight: 800; color: #ffffff;">Intervyou<span style="color: var(--accent-cyan);">.AI</span></h1>
-      <p style="color: var(--text-muted); font-size: 14px; margin-top: 6px;">Simulasi Wawancara Kerja Berbasis NLP & Text Mining</p>
+  <div class="auth-container-split">
+    <!-- Kolom Kiri: Pengenalan & Fitur -->
+    <div class="auth-intro">
+      <h1 class="auth-brand">Intervyou<span>.AI</span></h1>
+      <h2 class="auth-headline">Simulasi Wawancara Kerja Teknis Berbasis NLP & Text Mining</h2>
+      <p class="auth-desc">
+        Persiapkan wawancara kerja Anda dengan latihan terstruktur. Sistem mengevaluasi ketepatan argumen Anda secara objektif menggunakan perbandingan semantik dan analisis kata kunci.
+      </p>
+
+      <div class="auth-features">
+        <div class="auth-feature-item">
+          <div class="feature-dot"></div>
+          <div>
+            <div class="feature-title">7 Pilihan Role Profesional</div>
+            <div class="feature-desc">Mencakup Data Scientist, Data Engineer, ML, Backend, Frontend, Web, dan Mobile.</div>
+          </div>
+        </div>
+
+        <div class="auth-feature-item">
+          <div class="feature-dot"></div>
+          <div>
+            <div class="feature-title">Mode Suara & Teks Interaktif</div>
+            <div class="feature-desc">Bicara langsung via Speech Recognition Bahasa Indonesia atau ketik jawaban Anda.</div>
+          </div>
+        </div>
+
+        <div class="auth-feature-item">
+          <div class="feature-dot"></div>
+          <div>
+            <div class="feature-title">Evaluasi Semantik & Keyword Gap</div>
+            <div class="feature-desc">Mendeteksi kecocokan konsep (TF-IDF & Cosine) dan kata kunci teknis yang terlewat.</div>
+          </div>
+        </div>
+      </div>
     </div>
 
-    {% if error %}
-    <div class="alert-error">
-      {{ error }}
+    <!-- Kolom Kanan: Form Input Data Diri -->
+    <div class="auth-card glass-card">
+      <div class="auth-card-header">
+        <h3 class="auth-card-title">Mulai Sesi Wawancara</h3>
+        <p class="auth-card-subtitle">Masukkan nama dan peran yang ingin Anda latih hari ini.</p>
+      </div>
+
+      {% if error %}
+      <div class="alert-error">
+        {{ error }}
+      </div>
+      {% endif %}
+
+      <form method="POST" action="{{ url_for('login') }}">
+        <div class="form-group">
+          <label class="form-label" for="name">Nama Lengkap</label>
+          <input type="text" id="name" name="name" class="form-input" placeholder="Contoh: May Rizky Ardanata" required autofocus>
+        </div>
+
+        <div class="form-group">
+          <label class="form-label" for="role">Bidang Pekerjaan (Role)</label>
+          <select id="role" name="role" class="form-select" required>
+            <option value="" disabled selected>Pilih target peran...</option>
+            {% for r in roles %}
+            <option value="{{ r }}">{{ r }}</option>
+            {% endfor %}
+          </select>
+        </div>
+
+        <button type="submit" class="btn-primary" style="width: 100%; justify-content: center; margin-top: 10px;">
+          Masuk ke Dashboard →
+        </button>
+      </form>
     </div>
-    {% endif %}
-
-    <form method="POST" action="{{ url_for('login') }}">
-      <div class="form-group">
-        <label class="form-label" for="name">Nama Lengkap</label>
-        <input type="text" id="name" name="name" class="form-input" placeholder="Masukkan nama Anda" required autofocus>
-      </div>
-
-      <div class="form-group">
-        <label class="form-label" for="role">Bidang Pekerjaan (Role)</label>
-        <select id="role" name="role" class="form-select" required>
-          <option value="" disabled selected>Pilih target peran...</option>
-          {% for r in roles %}
-          <option value="{{ r }}">{{ r }}</option>
-          {% endfor %}
-        </select>
-      </div>
-
-      <button type="submit" class="btn-primary" style="width: 100%; justify-content: center; margin-top: 10px;">
-        Mulai Latihan Wawancara →
-      </button>
-    </form>
   </div>
 </div>
 {% endblock %}
