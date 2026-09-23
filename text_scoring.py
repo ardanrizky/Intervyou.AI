@@ -14,6 +14,7 @@ except ImportError:
             return word
     _stemmer = _DummyStemmer()
 
+# daftar kata hubung dan kata umum bahasa indonesia yang diabaikan
 INDO_STOPWORDS = {
     "dan", "yang", "di", "ke", "dari", "pada", "untuk", "dengan",
     "ini", "itu", "saya", "kami", "kita", "anda", "atau", "karena",
@@ -60,6 +61,7 @@ def evaluate_interview_answer(user_answer: str, ideal_answers: List[str], questi
             "is_irrelevant": True
         }
 
+    # kumpulkan istilah acuan dari jawaban ideal dan pertanyaan
     combined_reference = " ".join(ideal_answers)
     reference_terms = extract_meaningful_terms(combined_reference)
     if question_text:
@@ -72,7 +74,7 @@ def evaluate_interview_answer(user_answer: str, ideal_answers: List[str], questi
     user_words = user_raw_lower.split()
     word_count = len(user_words)
 
-    # Stemmed matching and raw matching for keywords
+    # cocokkan kata kunci yang disebut pengguna
     matched = []
     missing = []
     
@@ -83,7 +85,7 @@ def evaluate_interview_answer(user_answer: str, ideal_answers: List[str], questi
         else:
             missing.append(term)
 
-    # Preprocessed TF-IDF Cosine Similarity
+    # hitung kemiripan kalimat dengan tf-idf dan cosine similarity
     proc_user = preprocess(user_answer)
     proc_ideals = [preprocess(ans) for ans in ideal_answers]
 
@@ -105,7 +107,7 @@ def evaluate_interview_answer(user_answer: str, ideal_answers: List[str], questi
     except Exception:
         sim = 0.0
 
-    # Also check similarity with question if provided
+    # ukur juga kesamaan dengan pertanyaan
     if question_text:
         proc_q = preprocess(question_text)
         if proc_q:
@@ -121,8 +123,7 @@ def evaluate_interview_answer(user_answer: str, ideal_answers: List[str], questi
 
     effective_sim = max(sim, q_sim * 0.75)
 
-    # 1. Nonsense / Gibberish Detection
-    # If 0 keywords matched and very low similarity, flag as irrelevant
+    # filter kalau jawaban terdeteksi ngawur atau sama sekali tidak nyambung
     if len(matched) == 0 and effective_sim < 0.10:
         return {
             "score": max(10, min(25, int(round(effective_sim * 100)))),
@@ -133,15 +134,11 @@ def evaluate_interview_answer(user_answer: str, ideal_answers: List[str], questi
             "is_irrelevant": True
         }
 
-    # 2. Multi-factor scoring
-    # A. Semantic fit (scaled so good answers reach high scores naturally)
+    # perhitungan bobot: kemiripan semantik, cakupan kata kunci, dan panjang jawaban
     semantic_score = min(1.0, effective_sim * 2.0)
-
-    # B. Keyword coverage (up to 5 key concepts is considered complete)
     target_kw_count = min(len(reference_terms), 5) if reference_terms else 3
     coverage_score = min(1.0, len(matched) / float(target_kw_count))
 
-    # C. Depth / substance score (15 to 45 words is sweet spot for interview answers)
     if word_count < 10:
         depth_score = 0.4
     elif word_count < 25:
@@ -149,14 +146,13 @@ def evaluate_interview_answer(user_answer: str, ideal_answers: List[str], questi
     else:
         depth_score = 1.0
 
-    # Weighted blend
     raw_composite = (semantic_score * 0.45) + (coverage_score * 0.40) + (depth_score * 0.15)
     
-    # Scale smoothly from 45 to 98
+    # skala skor akhir 45 sampai 98
     final_score = int(round(45 + raw_composite * 53))
     final_score = max(35, min(98, final_score))
 
-    # Qualitative feedback
+    # feedback berdasarkan skor yang didapat
     if final_score >= 85:
         feedback = "Jawaban sangat komprehensif, tepat sasaran, dan mencakup terminologi teknis yang kuat."
     elif final_score >= 70:
@@ -175,7 +171,7 @@ def evaluate_interview_answer(user_answer: str, ideal_answers: List[str], questi
         "is_irrelevant": False
     }
 
-# Backward compatibility wrappers
+# fungsi pendukung tambahan
 def tfidf_cosine_score(user_answer: str, ideal_answers: List[str]) -> float:
     res = evaluate_interview_answer(user_answer, ideal_answers)
     return res["similarity"]

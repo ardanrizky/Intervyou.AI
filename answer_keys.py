@@ -22,11 +22,7 @@ ROLE_QUESTION_TEXTS: Dict[str, List[str]] = {
     "mobile developer": MOB_QUESTIONS,
 }
 
-# ====== JAWABAN IDEAL PER ROLE & PER PERTANYAAN ======
-# NOTE:
-# - Ini contoh singkat. Kamu bisa ganti / perpanjang jadi lebih detail.
-# - Panjang list di setiap role harus sama dengan jumlah pertanyaan (7).
-
+# kunci jawaban acuan tiap peran dan nomor soal
 DATA_SCIENTIST_ANSWERS: List[List[str]] = [
     [
         "Saya pernah mengerjakan proyek analisis churn pelanggan. Saya mulai dari pengumpulan data dari database transaksi, melakukan pembersihan dan exploratory data analysis, lalu membangun model klasifikasi seperti Random Forest dan XGBoost untuk memprediksi pelanggan yang berpotensi churn, serta mengevaluasi dengan metrik AUC dan F1 score.",
