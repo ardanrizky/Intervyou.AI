@@ -86,6 +86,3 @@ Intervyou.AI/
 ├── requirements.txt        # Daftar dependensi library
 └── README.md               # Dokumentasi proyek
 ```
-
-## Lisensi
-Proyek ini dibuat untuk keperluan portofolio dan latihan akademik.
