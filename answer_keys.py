@@ -11,7 +11,7 @@ from questions import (
     MOB_QUESTIONS,
 )
 
-# Biar lebih eksplisit, kita import list pertanyaan dari masing-masing role:
+# Biar lebih eksplisit, import list pertanyaan dari masing-masing role:
 ROLE_QUESTION_TEXTS: Dict[str, List[str]] = {
     "data scientist": DS_QUESTIONS,
     "data engineer": DE_QUESTIONS,
