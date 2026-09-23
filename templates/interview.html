@@ -1,0 +1,110 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="interview-box">
+  <div class="glass-card" style="padding: 30px;">
+    <div class="question-header">
+      <span id="questionIndexBadge" class="question-badge">Pertanyaan 1</span>
+      <span class="question-progress">Role: <strong style="color: var(--text-main);">{{ user_role }}</strong> • Total: {{ total_questions }} Pertanyaan</span>
+    </div>
+
+    <h2 id="questionContent" class="question-content">{{ question }}</h2>
+  </div>
+
+  <div class="glass-card" style="padding: 26px;">
+    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; flex-wrap: wrap; gap: 12px;">
+      <div class="mode-tabs">
+        <button id="voiceTab" class="mode-tab active">
+          <span>🎙️</span> Mode Suara (Mic)
+        </button>
+        <button id="textTab" class="mode-tab">
+          <span>✍️</span> Mode Teks
+        </button>
+      </div>
+      <span style="font-size: 13px; color: var(--text-subtle);">Bahasa: Indonesia (id-ID)</span>
+    </div>
+
+    <!-- Mode Suara -->
+    <div id="voiceArea" class="voice-area">
+      <button id="micBtn" class="mic-circle-btn" title="Klik untuk Bicara">
+        🎤
+      </button>
+      <p id="voiceStatus" class="voice-status">Klik mikrofon untuk mulai berbicara...</p>
+      <div id="speechPreview" class="speech-preview">
+        Jawaban suara Anda akan muncul di sini secara real-time...
+      </div>
+      <button id="sendVoiceBtn" class="btn-primary hidden" style="margin-top: 20px;">
+        Kirim Jawaban Suara →
+      </button>
+    </div>
+
+    <!-- Mode Teks -->
+    <div id="textArea" class="hidden">
+      <textarea id="textAnswerInput" class="text-area" placeholder="Ketik penjelasan teknis Anda di sini secara mendalam..."></textarea>
+      <div style="display: flex; justify-content: flex-end; margin-top: 16px;">
+        <button id="submitTextBtn" class="btn-primary">
+          Kirim Jawaban →
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Kartu Evaluasi Jawaban (Muncul Real-Time) -->
+  <div id="evalCard" class="eval-card hidden">
+    <div class="eval-top">
+      <div class="eval-score-ring">
+        <span id="evalScoreNum" class="eval-score-num">0</span>
+        <span class="eval-score-total">/ 100</span>
+      </div>
+      <div class="eval-feedback-text">
+        <h4 style="font-size: 15px; font-weight: 700; color: #ffffff; margin-bottom: 4px;">Analisis Jawaban:</h4>
+        <p id="evalFeedbackText" style="color: var(--text-muted); font-size: 14px; line-height: 1.5;"></p>
+      </div>
+    </div>
+
+    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 16px; border-top: 1px solid var(--border-color); padding-top: 18px;">
+      <div class="keyword-section">
+        <span class="keyword-label" style="color: var(--accent-emerald);">Kata Kunci Cocok:</span>
+        <div id="matchedTags" class="tag-list"></div>
+      </div>
+      <div class="keyword-section">
+        <span class="keyword-label" style="color: var(--accent-rose);">Saran Istilah Tambahan:</span>
+        <div id="missingTags" class="tag-list"></div>
+      </div>
+    </div>
+
+    <div style="display: flex; justify-content: flex-end; margin-top: 10px;">
+      <button id="nextQuestionBtn" class="btn-primary">
+        Lanjut ke Pertanyaan Berikutnya →
+      </button>
+    </div>
+  </div>
+
+  <!-- Kartu Selesai Wawancara -->
+  <div id="finishCard" class="glass-card hidden" style="text-align: center; padding: 40px; border-color: rgba(99, 102, 241, 0.4);">
+    <div style="font-size: 48px; margin-bottom: 12px;">🎉</div>
+    <h2 style="font-size: 24px; font-weight: 800; color: #ffffff;">Sesi Wawancara Selesai!</h2>
+    <p style="color: var(--text-muted); margin-top: 6px; font-size: 14.5px;">Selamat, Anda telah menyelesaikan seluruh rangkaian pertanyaan teknis untuk peran {{ user_role }}.</p>
+
+    <div style="margin: 28px auto; width: 120px; height: 120px; border-radius: 50%; border: 6px solid var(--accent-cyan); display: flex; flex-direction: column; align-items: center; justify-content: center; box-shadow: 0 0 30px rgba(6, 182, 212, 0.3);">
+      <span id="finalAvgScore" style="font-size: 38px; font-weight: 800; color: #ffffff; line-height: 1;">0</span>
+      <span style="font-size: 11px; color: var(--text-muted); text-transform: uppercase; margin-top: 4px;">Rata-rata</span>
+    </div>
+
+    <p id="overallFeedbackText" style="max-width: 600px; margin: 0 auto 30px auto; color: var(--text-main); font-size: 15px; line-height: 1.6; background: rgba(255, 255, 255, 0.03); padding: 18px; border-radius: var(--radius-md); border: 1px solid var(--border-color);"></p>
+
+    <div style="display: flex; justify-content: center; gap: 14px; flex-wrap: wrap;">
+      <a href="{{ url_for('history') }}" class="btn-primary">
+        📜 Lihat Riwayat & Ekspor Excel
+      </a>
+      <a href="{{ url_for('dashboard') }}" class="btn-secondary">
+        Kembali ke Dashboard
+      </a>
+    </div>
+  </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script src="{{ url_for('static', filename='js/interview.js') }}"></script>
+{% endblock %}

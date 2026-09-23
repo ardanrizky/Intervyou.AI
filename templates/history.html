@@ -1,0 +1,77 @@
+{% extends "base.html" %}
+
+{% block content %}
+<header class="page-header">
+  <div>
+    <h1 class="page-title">Riwayat Simulasi Wawancara</h1>
+    <p class="page-desc">Rekam jejak evaluasi dan perkembangan performa wawancara teknis Anda.</p>
+  </div>
+  <div>
+    <a href="{{ url_for('history_export') }}" class="btn-primary" style="background: linear-gradient(135deg, #059669, #10b981);">
+      <span>📥</span> Ekspor Excel (.xlsx)
+    </a>
+  </div>
+</header>
+
+<section class="glass-card" style="padding: 24px;">
+  <div class="table-wrapper">
+    <table class="custom-table">
+      <thead>
+        <tr>
+          <th>No</th>
+          <th>Nama Kandidat</th>
+          <th>Bidang Pekerjaan (Role)</th>
+          <th>Rata-rata Skor</th>
+          <th>Waktu Simulasi</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% if sessions %}
+          {% for s in sessions %}
+          <tr>
+            <td style="color: var(--text-subtle); font-family: 'JetBrains Mono', monospace; font-size: 13px;">#{{ s.id }}</td>
+            <td style="font-weight: 600; color: #ffffff;">{{ s.user_name }}</td>
+            <td>
+              <span style="display: inline-block; padding: 3px 10px; background: rgba(99, 102, 241, 0.12); color: var(--accent-cyan); border-radius: var(--radius-sm); font-size: 12.5px; font-weight: 600;">
+                {{ s.role }}
+              </span>
+            </td>
+            <td>
+              {% if s.average_score >= 80 %}
+                <span class="score-badge badge-high">{{ s.average_score }} / 100</span>
+              {% elif s.average_score >= 60 %}
+                <span class="score-badge badge-mid">{{ s.average_score }} / 100</span>
+              {% else %}
+                <span class="score-badge badge-low">{{ s.average_score }} / 100</span>
+              {% endif %}
+            </td>
+            <td style="color: var(--text-muted); font-size: 13px;">{{ s.created_at }}</td>
+          </tr>
+          {% endfor %}
+        {% else %}
+          <tr>
+            <td colspan="5" style="text-align: center; padding: 48px 20px; color: var(--text-muted);">
+              Belum ada riwayat simulasi wawancara. <br>
+              <a href="{{ url_for('interview') }}" style="color: var(--accent-cyan); text-decoration: none; font-weight: 600; margin-top: 8px; display: inline-block;">
+                Mulai sesi simulasi pertama Anda sekarang →
+              </a>
+            </td>
+          </tr>
+        {% endif %}
+      </tbody>
+    </table>
+  </div>
+
+  {% if total_pages > 1 %}
+  <div class="pagination">
+    <a href="{{ url_for('history', page=page-1) }}" class="page-btn {% if page <= 1 %}disabled{% endif %}">
+      ← Sebelumnya
+    </a>
+    <span style="font-size: 13px; color: var(--text-muted);">Halaman <strong>{{ page }}</strong> dari {{ total_pages }}</span>
+    <a href="{{ url_for('history', page=page+1) }}" class="page-btn {% if page >= total_pages %}disabled{% endif %}">
+      Selanjutnya →
+    </a>
+  </div>
+  {% endif %}
+</section>
+{% endblock %}

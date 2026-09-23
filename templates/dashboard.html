@@ -1,0 +1,80 @@
+{% extends "base.html" %}
+
+{% block content %}
+<header class="page-header">
+  <div>
+    <h1 class="page-title">Selamat Datang, {{ user_name }}! 👋</h1>
+    <p class="page-desc">Tingkatkan kesiapan wawancara teknis Anda untuk peran <strong style="color: var(--accent-cyan);">{{ user_role }}</strong>.</p>
+  </div>
+  <div>
+    <a href="{{ url_for('interview') }}" class="btn-primary">
+      <span>🎙️</span> Mulai Sesi Baru
+    </a>
+  </div>
+</header>
+
+<section class="stat-grid">
+  <div class="glass-card stat-card">
+    <div class="stat-icon-wrapper">🎯</div>
+    <div class="stat-details">
+      <span class="stat-value">{{ stats.total_sessions }}</span>
+      <span class="stat-label">Total Sesi Latihan</span>
+    </div>
+  </div>
+
+  <div class="glass-card stat-card">
+    <div class="stat-icon-wrapper" style="color: var(--accent-cyan); background: rgba(6, 182, 212, 0.12); border-color: rgba(6, 182, 212, 0.25);">📈</div>
+    <div class="stat-details">
+      <span class="stat-value">{{ stats.avg_score }}</span>
+      <span class="stat-label">Rata-rata Skor</span>
+    </div>
+  </div>
+
+  <div class="glass-card stat-card">
+    <div class="stat-icon-wrapper" style="color: var(--accent-emerald); background: rgba(16, 185, 129, 0.12); border-color: rgba(16, 185, 129, 0.25);">⭐</div>
+    <div class="stat-details">
+      <span class="stat-value">{{ stats.best_score }}</span>
+      <span class="stat-label">Skor Tertinggi</span>
+    </div>
+  </div>
+
+  <div class="glass-card stat-card">
+    <div class="stat-icon-wrapper" style="color: var(--accent-amber); background: rgba(245, 158, 11, 0.12); border-color: rgba(245, 158, 11, 0.25);">🔥</div>
+    <div class="stat-details">
+      <span class="stat-value">{{ stats.streak_days }}</span>
+      <span class="stat-label">Aktivitas Latihan</span>
+    </div>
+  </div>
+</section>
+
+<section class="glass-card action-hero">
+  <div class="action-text">
+    <h2>Simulasi Wawancara Interaktif</h2>
+    <p>Jawab pertanyaan teknis secara lisan lewat mikrofon atau ketik langsung. Algoritma NLP akan menilai kecocokan semantik dan kelengkapan konsep jawaban Anda secara instan.</p>
+  </div>
+  <a href="{{ url_for('interview') }}" class="btn-primary">
+    Mulai Latihan Sekarang →
+  </a>
+</section>
+
+<section class="glass-card" style="padding: 26px;">
+  <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
+    <h3 style="font-size: 17px; font-weight: 700; color: #ffffff;">💡 Tips Sukses Wawancara Teknis</h3>
+    <a href="{{ url_for('history') }}" class="btn-secondary" style="font-size: 13px; padding: 8px 14px;">Lihat Riwayat Sesi</a>
+  </div>
+  <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 16px;">
+    <div style="padding: 16px; background: rgba(255, 255, 255, 0.02); border-radius: var(--radius-md); border: 1px solid var(--border-color);">
+      <h4 style="color: var(--accent-cyan); font-size: 14px; margin-bottom: 6px;">Metode STAR</h4>
+      <p style="font-size: 13px; color: var(--text-muted);">Jelaskan Situation, Task, Action, dan Result saat menceritakan pengalaman proyek riil Anda.</p>
+    </div>
+    <div style="padding: 16px; background: rgba(255, 255, 255, 0.02); border-radius: var(--radius-md); border: 1px solid var(--border-color);">
+      <h4 style="color: var(--accent-emerald); font-size: 14px; margin-bottom: 6px;">Gunakan Terminologi Kunci</h4>
+      <p style="font-size: 13px; color: var(--text-muted);">Sebutkan pustaka, metrik evaluasi, atau arsitektur sistem yang relevan dengan pertanyaan.</p>
+    </div>
+    <div style="padding: 16px; background: rgba(255, 255, 255, 0.02); border-radius: var(--radius-md); border: 1px solid var(--border-color);">
+      <h4 style="color: var(--primary); font-size: 14px; margin-bottom: 6px;">Sertakan Argumen & Trade-off</h4>
+      <p style="font-size: 13px; color: var(--text-muted);">Jelaskan alasan mengapa Anda memilih suatu alat atau metode dibanding alternatif lainnya.</p>
+    </div>
+  </div>
+</section>
+{% endblock %}
