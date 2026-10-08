@@ -57,12 +57,12 @@
         <span class="eval-score-total">/ 100</span>
       </div>
       <div class="eval-feedback-text">
-        <h4 style="font-size: 15px; font-weight: 700; color: #ffffff; margin-bottom: 4px;">Analisis Jawaban:</h4>
+        <h4 style="font-size: 15px; font-weight: 700; color: var(--text-main); margin-bottom: 4px;">Analisis Jawaban:</h4>
         <p id="evalFeedbackText" style="color: var(--text-muted); font-size: 14px; line-height: 1.5;"></p>
       </div>
     </div>
 
-    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 16px; border-top: 1px solid var(--border-color); padding-top: 18px;">
+    <div class="eval-keywords-grid">
       <div class="keyword-section">
         <span class="keyword-label" style="color: var(--accent-emerald);">Kata Kunci Cocok:</span>
         <div id="matchedTags" class="tag-list"></div>
@@ -73,26 +73,26 @@
       </div>
     </div>
 
-    <div style="display: flex; justify-content: flex-end; margin-top: 10px;">
-      <button id="nextQuestionBtn" class="btn-primary">
+    <div class="eval-action-row">
+      <button id="nextQuestionBtn" class="btn-primary" style="width: 100%; justify-content: center;">
         Lanjut ke Pertanyaan Berikutnya →
       </button>
     </div>
   </div>
 
   <!-- Kartu Selesai Wawancara -->
-  <div id="finishCard" class="glass-card hidden" style="text-align: center; padding: 40px; border-color: rgba(99, 102, 241, 0.4);">
-    <h2 style="font-size: 24px; font-weight: 800; color: #ffffff; margin-bottom: 6px;">Sesi Wawancara Selesai</h2>
-    <p style="color: var(--text-muted); font-size: 14.5px;">Selamat, Anda telah menyelesaikan seluruh rangkaian pertanyaan teknis untuk peran {{ user_role }}.</p>
+  <div id="finishCard" class="glass-card finish-card hidden">
+    <h2 class="finish-title">Sesi Wawancara Selesai</h2>
+    <p class="finish-desc">Selamat, Anda telah menyelesaikan seluruh rangkaian pertanyaan teknis untuk peran <strong>{{ user_role }}</strong>.</p>
 
-    <div style="margin: 28px auto; width: 120px; height: 120px; border-radius: 50%; border: 6px solid var(--accent-cyan); display: flex; flex-direction: column; align-items: center; justify-content: center; box-shadow: 0 0 30px rgba(6, 182, 212, 0.3);">
-      <span id="finalAvgScore" style="font-size: 38px; font-weight: 800; color: #ffffff; line-height: 1;">0</span>
-      <span style="font-size: 11px; color: var(--text-muted); text-transform: uppercase; margin-top: 4px;">Rata-rata</span>
+    <div class="score-circle-wrapper">
+      <span id="finalAvgScore" class="score-circle-num">0</span>
+      <span class="score-circle-label">Rata-rata</span>
     </div>
 
-    <p id="overallFeedbackText" style="max-width: 600px; margin: 0 auto 30px auto; color: var(--text-main); font-size: 15px; line-height: 1.6; background: rgba(255, 255, 255, 0.03); padding: 18px; border-radius: var(--radius-md); border: 1px solid var(--border-color);"></p>
+    <p id="overallFeedbackText" class="overall-feedback-box"></p>
 
-    <div style="display: flex; justify-content: center; gap: 14px; flex-wrap: wrap;">
+    <div class="finish-actions">
       <a href="{{ url_for('history') }}" class="btn-primary">
         Lihat Riwayat & Ekspor Excel
       </a>

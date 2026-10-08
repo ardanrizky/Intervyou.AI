@@ -13,7 +13,10 @@
   </div>
 </header>
 
-<section class="glass-card" style="padding: 24px;">
+<section class="glass-card history-card">
+  <div class="table-scroll-hint">
+    <span>👉 Geser tabel ke samping untuk melihat kolom lengkap</span>
+  </div>
   <div class="table-wrapper">
     <table class="custom-table">
       <thead>
@@ -30,9 +33,9 @@
           {% for s in sessions %}
           <tr>
             <td style="color: var(--text-subtle); font-family: 'JetBrains Mono', monospace; font-size: 13px;">#{{ s.id }}</td>
-            <td style="font-weight: 600; color: #ffffff;">{{ s.user_name }}</td>
+            <td style="font-weight: 600; color: var(--text-main);">{{ s.user_name }}</td>
             <td>
-              <span style="display: inline-block; padding: 3px 10px; background: rgba(99, 102, 241, 0.12); color: var(--accent-cyan); border-radius: var(--radius-sm); font-size: 12.5px; font-weight: 600;">
+              <span class="role-pill">
                 {{ s.role }}
               </span>
             </td>
@@ -45,7 +48,7 @@
                 <span class="score-badge badge-low">{{ s.average_score }} / 100</span>
               {% endif %}
             </td>
-            <td style="color: var(--text-muted); font-size: 13px;">{{ s.created_at }}</td>
+            <td style="color: var(--text-muted); font-size: 13px; white-space: nowrap;">{{ s.created_at }}</td>
           </tr>
           {% endfor %}
         {% else %}

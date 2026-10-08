@@ -57,21 +57,21 @@
   </a>
 </section>
 
-<section class="glass-card" style="padding: 28px;">
-  <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
-    <h3 style="font-size: 17px; font-weight: 700; color: #ffffff;">Panduan Wawancara Teknis</h3>
-    <a href="{{ url_for('history') }}" class="btn-secondary" style="font-size: 13px; padding: 8px 16px;">Lihat Riwayat Sesi</a>
+<section class="glass-card guide-section">
+  <div class="guide-header">
+    <h3 class="guide-title">Panduan Wawancara Teknis</h3>
+    <a href="{{ url_for('history') }}" class="btn-secondary guide-history-link">Lihat Riwayat Sesi</a>
   </div>
-  <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 18px;">
-    <div style="padding: 18px; background: rgba(255, 255, 255, 0.02); border-radius: var(--radius-md); border: 1px solid var(--border-color);">
+  <div class="guide-grid">
+    <div class="guide-card">
       <h4 style="color: var(--accent-cyan); font-size: 14.5px; margin-bottom: 6px; font-weight: 700;">Metode STAR</h4>
       <p style="font-size: 13.5px; color: var(--text-muted); line-height: 1.5;">Jelaskan Situation, Task, Action, dan Result saat menceritakan pengalaman proyek riil Anda.</p>
     </div>
-    <div style="padding: 18px; background: rgba(255, 255, 255, 0.02); border-radius: var(--radius-md); border: 1px solid var(--border-color);">
+    <div class="guide-card">
       <h4 style="color: var(--accent-emerald); font-size: 14.5px; margin-bottom: 6px; font-weight: 700;">Gunakan Terminologi Kunci</h4>
       <p style="font-size: 13.5px; color: var(--text-muted); line-height: 1.5;">Sebutkan pustaka, metrik evaluasi, atau arsitektur sistem yang relevan dengan pertanyaan.</p>
     </div>
-    <div style="padding: 18px; background: rgba(255, 255, 255, 0.02); border-radius: var(--radius-md); border: 1px solid var(--border-color);">
+    <div class="guide-card">
       <h4 style="color: var(--primary); font-size: 14.5px; margin-bottom: 6px; font-weight: 700;">Sertakan Argumen & Trade-off</h4>
       <p style="font-size: 13.5px; color: var(--text-muted); line-height: 1.5;">Jelaskan alasan mengapa Anda memilih suatu alat atau metode dibanding alternatif lainnya.</p>
     </div>

@@ -2,18 +2,40 @@
 <html lang="id">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0">
   <title>{{ title or "Intervyou.AI - Platform Latihan Wawancara Kerja Berbasis AI" }}</title>
   <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
   <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🎯</text></svg>">
 </head>
 <body>
   {% if session.get('user_name') %}
+  <!-- Mobile Header (Hanya tampil di layar kecil/hp) -->
+  <header class="mobile-topbar">
+    <a href="{{ url_for('dashboard') }}" class="mobile-brand">
+      <span class="brand-title">Intervyou<span>.AI</span></span>
+    </a>
+    <button class="mobile-menu-btn" id="mobileMenuBtn" aria-label="Buka Menu" type="button">
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <line x1="3" y1="12" x2="21" y2="12"></line>
+        <line x1="3" y1="6" x2="21" y2="6"></line>
+        <line x1="3" y1="18" x2="21" y2="18"></line>
+      </svg>
+    </button>
+  </header>
+
+  <!-- Backdrop overlay saat menu mobile terbuka -->
+  <div class="sidebar-backdrop" id="sidebarBackdrop"></div>
+
   <div class="app-container">
-    <aside class="sidebar">
-      <a href="{{ url_for('dashboard') }}" class="brand">
-        <span class="brand-title">Intervyou<span>.AI</span></span>
-      </a>
+    <aside class="sidebar" id="sidebar">
+      <div class="sidebar-header">
+        <a href="{{ url_for('dashboard') }}" class="brand">
+          <span class="brand-title">Intervyou<span>.AI</span></span>
+        </a>
+        <button class="sidebar-close-btn" id="sidebarCloseBtn" aria-label="Tutup Menu" type="button">
+          ✕
+        </button>
+      </div>
 
       <ul class="nav-links">
         <li class="nav-item {% if request.path == url_for('dashboard') %}active{% endif %}">
@@ -49,6 +71,49 @@
   {% else %}
     {% block auth_content %}{% endblock %}
   {% endif %}
+
+  <script>
+    // Handler toggle sidebar drawer di layar mobile
+    (function() {
+      const menuBtn = document.getElementById('mobileMenuBtn');
+      const sidebar = document.getElementById('sidebar');
+      const backdrop = document.getElementById('sidebarBackdrop');
+      const closeBtn = document.getElementById('sidebarCloseBtn');
+
+      function setMenuOpen(isOpen) {
+        if (!sidebar || !backdrop) return;
+        sidebar.classList.toggle('open', isOpen);
+        backdrop.classList.toggle('open', isOpen);
+        document.body.classList.toggle('menu-open', isOpen);
+      }
+
+      if (menuBtn) {
+        menuBtn.addEventListener('click', function(e) {
+          e.stopPropagation();
+          setMenuOpen(true);
+        });
+      }
+      if (closeBtn) {
+        closeBtn.addEventListener('click', function() {
+          setMenuOpen(false);
+        });
+      }
+      if (backdrop) {
+        backdrop.addEventListener('click', function() {
+          setMenuOpen(false);
+        });
+      }
+      // Tutup drawer jika link di sidebar ditekan
+      const navLinks = document.querySelectorAll('.sidebar .nav-item a');
+      navLinks.forEach(link => {
+        link.addEventListener('click', function() {
+          if (window.innerWidth <= 860) {
+            setMenuOpen(false);
+          }
+        });
+      });
+    })();
+  </script>
 
   {% block scripts %}{% endblock %}
 </body>
